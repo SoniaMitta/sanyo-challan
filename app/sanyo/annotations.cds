@@ -1,0 +1,1 @@
+using sanyo as service from '../../srv/sanyo';

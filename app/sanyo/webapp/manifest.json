@@ -1,0 +1,167 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "sanyo",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.15.4",
+      "toolsId": "1981c0f6-c294-4a9b-84de-481a64ccc6eb"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/sanyo/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.130.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "sanyo.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "A_MaterialDocumentHeaderList",
+          "target": "A_MaterialDocumentHeaderList"
+        },
+        {
+          "pattern": "A_MaterialDocumentHeader({key}):?query:",
+          "name": "A_MaterialDocumentHeaderObjectPage",
+          "target": "A_MaterialDocumentHeaderObjectPage"
+        },
+        {
+          "pattern": "A_MaterialDocumentHeader({key})/to_MaterialDocumentItem({key2}):?query:",
+          "name": "A_MaterialDocumentItemObjectPage",
+          "target": "A_MaterialDocumentItemObjectPage"
+        }
+      ],
+      "targets": {
+        "A_MaterialDocumentHeaderList": {
+          "type": "Component",
+          "id": "A_MaterialDocumentHeaderList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "initialLoad":"Enabled",
+              "contextPath": "/A_MaterialDocumentHeader",
+              "variantManagement": "Page",
+              "navigation": {
+                "A_MaterialDocumentHeader": {
+                  "detail": {
+                    "route": "A_MaterialDocumentHeaderObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "print": {
+                      "press": "sanyo.ext.print.print.print",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": false,
+                      "text": "print"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "A_MaterialDocumentHeaderObjectPage": {
+          "type": "Component",
+          "id": "A_MaterialDocumentHeaderObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/A_MaterialDocumentHeader"
+            }
+          }
+        },
+        "A_MaterialDocumentItemObjectPage": {
+          "type": "Component",
+          "id": "A_MaterialDocumentItemObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/A_MaterialDocumentHeader/to_MaterialDocumentItem"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  }
+}
